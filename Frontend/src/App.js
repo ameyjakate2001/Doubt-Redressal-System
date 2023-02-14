@@ -1,10 +1,11 @@
 import React from 'react'
 import Header from './components/Header'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import Homescreen from './screen/HomeScreen'
+import DoubtScreen from './screen/DoubtScreen'
 import Registerscreen from './screen/RegisterScreen'
 import LoginScreen from './screen/LoginScreen'
 import AddDoubtScreen from './screen/AddDoubtScreen'
+import MyDoubtScreen from './screen/MyDoubtScreen'
 import PrivateRoute from './screen/PrivateRoute'
 import useCheckUser from './hooks/useCheckUser'
 import PageLoader from './components/PageLoader'
@@ -25,11 +26,12 @@ function App() {
       <div className='App'>
         <Header />
         <Routes>
+          <Route path='/' element={<DoubtScreen />} />
           <Route
-            path='/'
+            path='/myDoubt'
             element={
               <PrivateRoute>
-                <Homescreen />
+                <MyDoubtScreen />
               </PrivateRoute>
             }
           />

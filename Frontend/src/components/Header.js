@@ -26,6 +26,9 @@ const Header = () => {
               <Link to='/addDoubt'>Raise Doubt</Link>
             </li>
             <li>
+              <Link to='/myDoubt'>Your Doubts</Link>
+            </li>
+            <li>
               <Link to='/solveDoubt'>Solve Doubt</Link>
             </li>
           </>

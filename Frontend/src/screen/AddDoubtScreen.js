@@ -9,18 +9,25 @@ const AddDoubtScreen = () => {
   const dispatch = useDispatch()
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
+  const [error, setError] = useState(null)
+  // let { user, errors } = useSelector((state) => state.userRegister)
 
   const addDoubtHandler = (e) => {
     e.preventDefault()
-    console.log('hi')
-    dispatch(addDoubtAction(title, description))
-  }
-  let { user, errors } = useSelector((state) => state.userRegister)
-  useEffect(() => {
-    if (user && Object.keys(user) != 0) {
-      navigate('/')
+    if (title === '' || description === '') {
+      setError('Fields can not be empty')
+    } else {
+      dispatch(addDoubtAction(title, description))
+      navigate('/myDoubt')
+      setError(null)
     }
-  }, [navigate, user])
+  }
+  // let { user, errors } = useSelector((state) => state.userRegister)
+  // useEffect(() => {
+  //   if (user && Object.keys(user) != 0) {
+  //     navigate('/')
+  //   }
+  // }, [navigate, user])
   return (
     <div>
       <h3 style={{ maxWidth: '600px', margin: '30px auto' }}>Raise Doubt</h3>
@@ -47,14 +54,7 @@ const AddDoubtScreen = () => {
 
         <div>
           <ListGroup>
-            {errors &&
-              Object.keys(errors).map((key) =>
-                errors[key] !== '' ? (
-                  <ListGroup.Item variant='danger'>
-                    {errors[key]}
-                  </ListGroup.Item>
-                ) : null
-              )}
+            {error && <ListGroup.Item variant='danger'>{error}</ListGroup.Item>}
           </ListGroup>
         </div>
         <div className='d-flex justify-content-end'>

@@ -52,6 +52,12 @@ const addComment = async (req, res) => {
 }
 const getUnresolved = async (req, res) => {
   const unresolved = await Doubt.find({ resolved: 0 })
+    .populate({
+      path: 'user_id',
+    })
+    .populate({
+      path: 'comments.user_id',
+    })
   res.send(unresolved)
 }
 const getDoubt = async (req, res) => {
