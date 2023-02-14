@@ -2,8 +2,10 @@ const jwt = require('jsonwebtoken')
 const User = require('../models/users')
 
 const requireAuth = (req, res, next) => {
-  const authHeader = req.headers['authorization']
-  const token = authHeader && authHeader.split(' ')[1]
+  // const authHeader = req.headers['authorization']
+  // const token = authHeader && authHeader.split(' ')[1]
+  const token = req.cookies.jwt
+  console.log(token)
   if (token) {
     jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
       if (err) {
@@ -18,8 +20,10 @@ const requireAuth = (req, res, next) => {
   }
 }
 const adminAuth = (req, res, next) => {
-  const authHeader = req.headers['authorization']
-  const token = authHeader && authHeader.split(' ')[1]
+  // const authHeader = req.headers['authorization']
+  // const token = authHeader && authHeader.split(' ')[1]
+  const token = req.cookies.jwt
+
   if (token) {
     jwt.verify(token, process.env.JWT_SECRET, async (err, user) => {
       if (err) {

@@ -11,6 +11,13 @@ const {
 
 const router = express.Router()
 
+// router.get('/getUnresolved', getUnresolved)
+// router.get('/getDoubt/:post_id', getDoubt)
+// router.get('/home', home)
+// router.post('/addDoubt', addDoubt)
+// router.post('/addComment', addComment)
+// router.post('/answerDoubt', answerDoubt)
+
 router.get('/getUnresolved', adminAuth, getUnresolved)
 router.get('/getDoubt/:post_id', adminAuth, getDoubt)
 router.get('/home', requireAuth, home)

@@ -1,6 +1,17 @@
 const User = require('../models/users')
 const Doubt = require('../models/doubts')
 
+const handleErrors = (err) => {
+  console.log(err)
+  let errors = { title: '', description: '' }
+  if (err.message.includes('doubt validation failed')) {
+    Object.values(err.errors).forEach(({ properties }) => {
+      errors[properties.path] = properties.message
+    })
+  }
+  return errors
+}
+
 const home = async (req, res) => {
   const doubts = await Doubt.find()
     .populate({
@@ -13,15 +24,19 @@ const home = async (req, res) => {
 }
 const addDoubt = async (req, res) => {
   const { title, description } = req.body
-
-  const doubt = new Doubt({
-    title,
-    description,
-    user_id: req.user.id,
-  })
-  await doubt.save()
-  console.log('doubt saved')
-  res.json({ doubt })
+  try {
+    const doubt = new Doubt({
+      title,
+      description,
+      user_id: req.user.id,
+    })
+    await doubt.save()
+    console.log('doubt saved')
+    res.json({ doubt })
+  } catch (err) {
+    const errors = handleErrors(err)
+    res.status(400).json({ errors })
+  }
 }
 
 const addComment = async (req, res) => {

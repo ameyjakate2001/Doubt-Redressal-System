@@ -11,10 +11,10 @@ connectDB()
 
 app.use(express.json())
 app.use(cookieParser())
-const PORT = process.env.PORT || 5000
+const PORT = process.env.PORT || 7000
 
 app.get('/', (req, res) => res.send('app initiallize'))
-app.use('/api/users', userRouter)
+app.use('/api/users/', userRouter)
 app.use('/api/doubts', doubtsRouter)
 
 app.listen(PORT, () => {

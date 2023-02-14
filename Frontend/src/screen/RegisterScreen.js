@@ -13,13 +13,13 @@ const RegisterScreen = () => {
   const registerHandler = (e) => {
     e.preventDefault()
     dispatch(registerAction(name, email, password))
-    setName('')
-    setEmail('')
-    setPassword('')
+    // setName('')
+    // setEmail('')
+    // setPassword('')
   }
-  let { user, errors } = useSelector((state) => state.userData)
+  let { user, errors } = useSelector((state) => state.userRegister)
   useEffect(() => {
-    if (Object.keys(user) != 0) {
+    if (user && Object.keys(user) != 0) {
       navigate('/')
     }
   }, [navigate, user])

@@ -2,6 +2,7 @@ const User = require('../models/users.js')
 const jwt = require('jsonwebtoken')
 
 const handleErrors = (err) => {
+  console.log(err.message)
   let errors = { name: '', email: '', password: '' }
   if (err.message === 'Email not Registered')
     errors.email = 'Email not Registered'
@@ -12,7 +13,7 @@ const handleErrors = (err) => {
     errors.email = 'that email is already registered'
     return errors
   }
-  if (err.message.includes('user validation failed')) {
+  if (err.message.includes('User validation failed')) {
     Object.values(err.errors).forEach(({ properties }) => {
       errors[properties.path] = properties.message
     })
@@ -27,12 +28,11 @@ const createWebToken = (id) => {
 const createUser = async (req, res) => {
   const { name, email, password } = req.body
   try {
-    const user = await User.create({ name, email, password })
+    let user = await User.create({ name, email, password })
+    user.password = undefined
     const token = createWebToken(user._id)
     res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 })
-    res
-      .status(201)
-      .json({ userId: user._id, name: user.name, email: user.email })
+    res.status(201).json(user)
   } catch (e) {
     const errors = handleErrors(e)
     res.status(400).json({ errors })
@@ -42,14 +42,40 @@ const createUser = async (req, res) => {
 const loginUser = async (req, res) => {
   const { email, password } = req.body
   try {
-    const user = await User.login(email, password)
+    let user = await User.login(email, password)
+    user.password = undefined
     const token = createWebToken(user._id)
-    console.log(token)
-    res.status(201).json({ user: user._id, token, msg: 'user logged in' })
+    res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 })
+
+    res.status(201).json(user)
   } catch (err) {
     const errors = handleErrors(err)
     res.status(400).json({ errors })
   }
 }
 
-module.exports = { createUser, loginUser }
+const checkUser = async (req, res) => {
+  const token = req.cookies.jwt
+  let user = null
+
+  if (token) {
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET)
+
+    try {
+      user = await User.findById(decodedToken.id)
+      user.password = undefined
+      console.log(user)
+      res.status(200).json(user)
+    } catch (err) {
+      console.log(err)
+      res.status(404).json(user)
+    }
+  } else {
+    res.status(200).json(user)
+  }
+}
+const logoutUser = async (req, res) => {
+  res.cookie('jwt', 'cookieExpired', { httpOnly: true, maxAge: 1000 })
+  res.json({ success: true, message: 'user successfully logged out' })
+}
+module.exports = { createUser, loginUser, checkUser, logoutUser }
