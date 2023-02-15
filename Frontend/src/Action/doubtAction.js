@@ -66,9 +66,7 @@ const addCommentAction = (comment, doubt_id) => async (dispatch) => {
       type: ADD_COMMENT_SUCCESS,
       payload: { newComment, doubt: response.data },
     })
-    console.log(newComment)
   } catch (error) {
-    console.log(error)
     dispatch({
       type: ADD_COMMENT_FAIL,
       payload: error && error.response.data.errors,
