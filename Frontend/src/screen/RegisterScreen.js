@@ -27,33 +27,7 @@ const RegisterScreen = () => {
   return (
     <form id='submitForm' onSubmit={registerHandler}>
       <h3>Sign Up</h3>
-      <div className='mb-3'>
-        <label>Name</label>
-        <input
-          type='text'
-          className='form-control'
-          placeholder='First name'
-          onChange={(e) => setName(e.target.value)}
-        />
-      </div>
-      <div className='mb-3'>
-        <label>Email address</label>
-        <input
-          type='email'
-          className='form-control'
-          placeholder='Enter email'
-          onChange={(e) => setEmail(e.target.value)}
-        />
-      </div>
-      <div className='mb-3'>
-        <label>Password</label>
-        <input
-          type='password'
-          className='form-control'
-          placeholder='Enter password'
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </div>
+
       <div>
         <ListGroup className='mb-3'>
           {errors &&

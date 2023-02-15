@@ -18,7 +18,7 @@ const AddDoubtScreen = () => {
       setError('Fields can not be empty')
     } else {
       dispatch(addDoubtAction(title, description))
-      navigate('/myDoubt')
+      navigate('/')
       setError(null)
     }
   }

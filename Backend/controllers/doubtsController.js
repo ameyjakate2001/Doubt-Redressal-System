@@ -47,7 +47,6 @@ const addComment = async (req, res) => {
     text,
   })
   await doubt.save()
-  console.log(doubt)
   res.send(doubt)
 }
 const getUnresolved = async (req, res) => {
