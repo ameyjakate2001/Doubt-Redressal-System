@@ -13,9 +13,12 @@ const DoubtScreen = () => {
   }, [dispatch])
   return (
     <div>
-      {loading && <PageLoader />}
-      {myDoubts &&
-        myDoubts.map((doubt) => <Doubt key={doubt.id} doubt={doubt} />)}
+      {loading ? (
+        <PageLoader />
+      ) : (
+        myDoubts &&
+        myDoubts.map((doubt) => <Doubt key={doubt.id} doubt={doubt} />)
+      )}
     </div>
   )
 }

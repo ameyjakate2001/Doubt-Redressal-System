@@ -8,6 +8,9 @@ import {
   ADD_COMMENT_START,
   ADD_COMMENT_SUCCESS,
   ADD_COMMENT_FAIL,
+  ADD_ANSWER_START,
+  ADD_ANSWER_SUCCESS,
+  ADD_ANSWER_FAIL,
 } from '../constant'
 import axios from 'axios'
 const getDoubtAction = () => async (dispatch, getState) => {
@@ -16,7 +19,7 @@ const getDoubtAction = () => async (dispatch, getState) => {
   })
 
   try {
-    const response = await axios.get('/api/doubts/getUnresolved')
+    const response = await axios.get('/api/doubts/getDoubts')
     const doubt = response.data
     dispatch({
       type: GET_DOUBT_SUCCESS,
@@ -73,5 +76,26 @@ const addCommentAction = (comment, doubt_id) => async (dispatch) => {
     })
   }
 }
+const addAnswerAction = (answer, doubt_id) => async (dispatch) => {
+  dispatch({
+    type: ADD_ANSWER_START,
+  })
 
-export { getDoubtAction, addDoubtAction, addCommentAction }
+  try {
+    const response = await axios.post('/api/doubts/answerDoubt', {
+      answer,
+      doubt_id,
+    })
+    dispatch({
+      type: ADD_ANSWER_SUCCESS,
+      payload: { doubt: response.data },
+    })
+  } catch (error) {
+    dispatch({
+      type: ADD_ANSWER_FAIL,
+      payload: error && error.response.data.errors,
+    })
+  }
+}
+
+export { getDoubtAction, addDoubtAction, addCommentAction, addAnswerAction }

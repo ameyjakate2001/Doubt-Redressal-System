@@ -22,15 +22,17 @@ const Header = () => {
         </li>
         {user ? (
           <>
-            <li>
-              <Link to='/addDoubt'>Raise Doubt</Link>
-            </li>
-            <li>
-              <Link to='/myDoubt'>Your Doubts</Link>
-            </li>
-            <li>
-              <Link to='/solveDoubt'>Solve Doubt</Link>
-            </li>
+            {user.role === 0 && (
+              <li>
+                <Link to='/addDoubt'>Raise Doubt</Link>
+              </li>
+            )}
+
+            {user.role === 1 && (
+              <li>
+                <Link to='/solveDoubt'>Solve Doubt</Link>
+              </li>
+            )}
           </>
         ) : null}
       </ul>

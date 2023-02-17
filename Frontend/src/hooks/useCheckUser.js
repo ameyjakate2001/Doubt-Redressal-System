@@ -9,7 +9,7 @@ const useCheckUser = () => {
 
   useEffect(() => {
     const checkUser = async () => {
-      const isUser = await axios.get('api/users')
+      const isUser = await axios.get('/api/users')
 
       console.log(isUser)
       const user = isUser.data

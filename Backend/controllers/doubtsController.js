@@ -65,8 +65,8 @@ const getDoubt = async (req, res) => {
   res.send(doubts)
 }
 const answerDoubt = async (req, res) => {
-  const { answer, post_id } = req.body
-  const post = await Doubt.findById(post_id)
+  const { answer, doubt_id } = req.body
+  const post = await Doubt.findById(doubt_id)
   post.answer = answer
   post.resolved = 1
   await post.save()

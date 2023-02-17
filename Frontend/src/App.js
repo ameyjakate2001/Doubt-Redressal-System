@@ -7,6 +7,7 @@ import LoginScreen from './screen/LoginScreen'
 import AddDoubtScreen from './screen/AddDoubtScreen'
 import MyDoubtScreen from './screen/MyDoubtScreen'
 import PrivateRoute from './screen/PrivateRoute'
+import AdminPrivateRoute from './screen/AdminPrivateRoute'
 import useCheckUser from './hooks/useCheckUser'
 import PageLoader from './components/PageLoader'
 
@@ -28,11 +29,11 @@ function App() {
         <Routes>
           <Route path='/' element={<DoubtScreen />} />
           <Route
-            path='/myDoubt'
+            path='/solveDoubt'
             element={
-              <PrivateRoute>
+              <AdminPrivateRoute>
                 <MyDoubtScreen />
-              </PrivateRoute>
+              </AdminPrivateRoute>
             }
           />
           <Route
