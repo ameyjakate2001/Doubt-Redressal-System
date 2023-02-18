@@ -10,6 +10,8 @@ import PrivateRoute from './screen/PrivateRoute'
 import AdminPrivateRoute from './screen/AdminPrivateRoute'
 import useCheckUser from './hooks/useCheckUser'
 import PageLoader from './components/PageLoader'
+import AskedDoubtScreen from './screen/AskedDoubtScreen'
+import SolvedDoubtScreen from './screen/SolvedDoubtScreen'
 
 function App() {
   const { loading } = useCheckUser()
@@ -37,10 +39,26 @@ function App() {
             }
           />
           <Route
+            path='/mySolvedDoubts'
+            element={
+              <AdminPrivateRoute>
+                <SolvedDoubtScreen />
+              </AdminPrivateRoute>
+            }
+          />
+          <Route
             path='/addDoubt'
             element={
               <PrivateRoute>
                 <AddDoubtScreen />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path='/myAskedDoubts'
+            element={
+              <PrivateRoute>
+                <AskedDoubtScreen />
               </PrivateRoute>
             }
           />

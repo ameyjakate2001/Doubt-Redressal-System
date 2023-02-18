@@ -6,7 +6,11 @@ const PrivateRoute = ({ children }) => {
   const { user } = useSelector((state) => state.userLogin)
 
   if (user) {
-    return children
+    if (user.role === 1) {
+      return <Navigate to='/' />
+    } else {
+      return children
+    }
   }
 
   return <Navigate to='/signup' />

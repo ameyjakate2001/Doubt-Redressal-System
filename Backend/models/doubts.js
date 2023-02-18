@@ -32,6 +32,10 @@ const doubtSchema = new mongoose.Schema({
   answer: {
     type: String,
   },
+  answer_id: {
+    type: ObjectId,
+    ref: 'User',
+  },
   comments: [commentSchema],
 })
 

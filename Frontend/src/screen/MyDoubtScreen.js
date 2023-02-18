@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { addAnswerAction } from '../Action/doubtAction'
 import { useDispatch, useSelector } from 'react-redux'
+import { getDoubtAction } from '../Action/doubtAction'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Doubt from '../components/Doubt'
@@ -17,7 +18,7 @@ const MyDoubtScreen = () => {
   const { myDoubts, loading } = useSelector((state) => state.doubts)
   const [answer, setAnswer] = useState('')
   const [doubts, setDoubts] = useState(
-    myDoubts.filter((doubt) => doubt.resolved === 0)
+    myDoubts && myDoubts.filter((doubt) => doubt.resolved === 0)
   )
   const [doubt, setDoubt] = useState(null)
   const queryParams = new URLSearchParams(window.location.search)
@@ -32,6 +33,9 @@ const MyDoubtScreen = () => {
     navigate('/')
   }
 
+  useEffect(() => {
+    dispatch(getDoubtAction())
+  }, [dispatch])
   return (
     <div>
       {loading ? (

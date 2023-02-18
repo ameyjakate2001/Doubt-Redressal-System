@@ -15,10 +15,13 @@ const handleErrors = (err) => {
 const home = async (req, res) => {
   const doubts = await Doubt.find()
     .populate({
+      path: 'comments.user_id',
+    })
+    .populate({
       path: 'user_id',
     })
     .populate({
-      path: 'comments.user_id',
+      path: 'answer_id',
     })
   res.send(doubts)
 }
@@ -41,13 +44,20 @@ const addDoubt = async (req, res) => {
 
 const addComment = async (req, res) => {
   const { doubt_id, text } = req.body
-  const doubt = await Doubt.findById(doubt_id)
+  const doubt = await Doubt.findById(doubt_id).populate({
+    path: 'comments.user_id',
+  })
   doubt.comments.push({
     user_id: req.user.id,
     text,
   })
   await doubt.save()
-  res.send(doubt)
+
+  res.send(
+    await Doubt.findById(doubt_id).populate({
+      path: 'comments.user_id',
+    })
+  )
 }
 const getUnresolved = async (req, res) => {
   const unresolved = await Doubt.find({ resolved: 0 })
@@ -68,10 +78,11 @@ const answerDoubt = async (req, res) => {
   const { answer, doubt_id } = req.body
   const post = await Doubt.findById(doubt_id)
   post.answer = answer
+  post.answer_id = req.user.id
   post.resolved = 1
   await post.save()
   console.log('answer added')
-  res.send(post)
+  res.send(await Doubt.findById(doubt_id).populate('answer_id'))
 }
 module.exports = {
   getUnresolved,

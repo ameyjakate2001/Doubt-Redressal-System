@@ -15,9 +15,13 @@ const Doubt = ({ doubt }) => {
   return (
     <div className='doubtCard'>
       <div className='tag'>
-        {doubt.resolved === 1 && (
+        {doubt.resolved === 1 ? (
           <Badge bg='success' style={{ fontSize: '10px' }}>
             Resolved
+          </Badge>
+        ) : (
+          <Badge bg='danger' style={{ fontSize: '10px' }}>
+            UnResolved
           </Badge>
         )}
       </div>
@@ -60,6 +64,12 @@ const Doubt = ({ doubt }) => {
             </div>
           </form>
         ) : null}
+        {doubt.resolved === 1 && doubt.answer_id && (
+          <>
+            <p>Answered By {doubt.answer_id.name}</p>
+            <h3>Answer : {doubt.answer}</h3>
+          </>
+        )}
       </div>
     </div>
   )

@@ -17,16 +17,23 @@ const getDoubtReducer = (state = { errors: {} }, action) => {
       return { loading: false, myDoubts: action.payload }
 
     case GET_DOUBT_FAIL:
-      return { loading: false, errors: action.payload }
+      return { loadidng: false, errors: action.payload }
 
     case ADD_COMMENT_SUCCESS:
-      const doubt = state.myDoubts.filter(
-        (data) => data._id === action.payload.doubt._id
-      )
-      doubt[0].comments.push(action.payload.newComment)
+      state.myDoubts.map((data) => {
+        if (data._id === action.payload.doubt._id) {
+          data.comments.push(action.payload.newComment)
+        }
+      })
+
+      // const doubt = state.myDoubts.filter(
+      //   (data) => data._id === action.payload.doubt._id
+      // )
+      // doubt[0].comments.push(action.payload.newComment)
+
       return {
         ...state,
-        myDoubts: [...state.myDoubts, doubt[0]],
+        myDoubts: [...state.myDoubts],
       }
     default:
       return state

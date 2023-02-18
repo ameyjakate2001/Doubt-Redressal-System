@@ -23,15 +23,25 @@ const Header = () => {
         {user ? (
           <>
             {user.role === 0 && (
-              <li>
-                <Link to='/addDoubt'>Raise Doubt</Link>
-              </li>
+              <>
+                <li>
+                  <Link to='/addDoubt'>Raise Doubt</Link>
+                </li>
+                <li>
+                  <Link to='/myAskedDoubts'>Your Doubts</Link>
+                </li>
+              </>
             )}
 
             {user.role === 1 && (
-              <li>
-                <Link to='/solveDoubt'>Solve Doubt</Link>
-              </li>
+              <>
+                <li>
+                  <Link to='/solveDoubt'>Solve Doubt</Link>
+                </li>
+                <li>
+                  <Link to='/mySolvedDoubts'>Your Doubts</Link>
+                </li>
+              </>
             )}
           </>
         ) : null}

@@ -20,7 +20,7 @@ const router = express.Router()
 
 router.get('/getUnresolved', requireAuth, getUnresolved)
 router.get('/getDoubt/:post_id', adminAuth, getDoubt)
-router.get('/getDoubts', requireAuth, home)
+router.get('/getDoubts', home)
 router.post('/addDoubt', requireAuth, addDoubt)
 router.post('/addComment', requireAuth, addComment)
 router.post('/answerDoubt', adminAuth, answerDoubt)
