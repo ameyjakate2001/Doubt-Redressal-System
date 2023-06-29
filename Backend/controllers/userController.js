@@ -56,23 +56,34 @@ const loginUser = async (req, res) => {
 
 const checkUser = async (req, res) => {
   const token = req.cookies.jwt
+  // console.log(token)
   let user = null
-
-  if (token) {
-    const decodedToken = jwt.verify(token, process.env.JWT_SECRET)
-
-    try {
-      user = await User.findById(decodedToken.id)
-      user.password = undefined
-      console.log(user)
-      res.status(200).json(user)
-    } catch (err) {
-      console.log(err)
-      res.status(404).json(user)
-    }
-  } else {
-    res.status(200).json(user)
+  let decodedToken
+  if (!token) {
+    return res.status(200).json(user)
   }
+  if (token && token !== 'undefined') {
+    jwt.verify(token, process.env.JWT_SECRET, (err, verifiedJwt) => {
+      if (err) {
+        console.log(err.message)
+        // res.send(err.message)
+      } else {
+        decodedToken = verifiedJwt
+        // res.send(verifiedJwt)
+      }
+    })
+  }
+  // console.log(decodedToken)
+  try {
+    user = await User.findById(decodedToken.id)
+    if (user) user.password = undefined
+    // console.log(user)
+    res.status(200).json(user)
+  } catch (err) {
+    console.log(err)
+    res.status(404).json(user)
+  }
+  // }
 }
 const logoutUser = async (req, res) => {
   res.cookie('jwt', 'cookieExpired', { httpOnly: true, maxAge: 1000 })

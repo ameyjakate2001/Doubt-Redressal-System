@@ -29,13 +29,14 @@ const MyDoubtScreen = () => {
     setDoubt(myDoubts.filter((doubt) => doubt._id === id)[0])
   }
   const addAnswerHandler = () => {
-    dispatch(addAnswerAction(answer, id))
-    navigate('/')
+    dispatch(addAnswerAction(answer, id)).then(() => {
+      navigate('/')
+    })
   }
 
-  useEffect(() => {
-    dispatch(getDoubtAction())
-  }, [dispatch])
+  // useEffect(() => {
+  //   dispatch(getDoubtAction())
+  // }, [dispatch])
   return (
     <div>
       {loading ? (
@@ -70,9 +71,15 @@ const MyDoubtScreen = () => {
         </div>
       ) : (
         doubts &&
-        doubts.map((doubt) => (
-          <div key={doubt._id} className=' d-flex justify-contend-end'>
-            <h3>{doubt.title}</h3>
+        doubts.map((doubt, i) => (
+          <div
+            key={doubt._id}
+            style={{ margin: '20px auto', maxWidth: '95' }}
+            className=' d-flex justify-contend-end'
+          >
+            <h3>
+              {i + 1}) {doubt.title}
+            </h3>
             <Button onClick={() => doubtAcceptHandler(doubt._id)}>
               Accept
             </Button>

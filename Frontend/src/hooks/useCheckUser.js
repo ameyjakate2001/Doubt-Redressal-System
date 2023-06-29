@@ -11,7 +11,7 @@ const useCheckUser = () => {
     const checkUser = async () => {
       const isUser = await axios.get('/api/users')
 
-      console.log(isUser)
+      // console.log(isUser)
       const user = isUser.data
       if (user) {
         dispatch({
@@ -25,6 +25,7 @@ const useCheckUser = () => {
         })
         setLoading(false)
       }
+      setLoading(false)
     }
     checkUser()
   }, [dispatch])

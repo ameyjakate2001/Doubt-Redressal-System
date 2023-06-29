@@ -4,8 +4,15 @@ const doubtsRouter = require('./routes/doubtsRouter')
 const connectDB = require('./db/db')
 const dotenv = require('dotenv')
 const cookieParser = require('cookie-parser')
+const cors = require('cors')
 
 const app = express()
+app.use(
+  cors({
+    origin: 'http://localhost:3000/',
+    credentials: true,
+  })
+)
 dotenv.config()
 connectDB()
 

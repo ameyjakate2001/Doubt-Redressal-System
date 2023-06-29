@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 import Header from './components/Header'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import DoubtScreen from './screen/DoubtScreen'
@@ -12,6 +13,7 @@ import useCheckUser from './hooks/useCheckUser'
 import PageLoader from './components/PageLoader'
 import AskedDoubtScreen from './screen/AskedDoubtScreen'
 import SolvedDoubtScreen from './screen/SolvedDoubtScreen'
+import styles from './index.css'
 
 function App() {
   const { loading } = useCheckUser()

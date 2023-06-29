@@ -10,17 +10,15 @@ const DoubtScreen = () => {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(getDoubtAction())
-  }, [dispatch])
+  }, [])
   return (
-    <div>
+    <div className='home_container'>
       {loading ? (
         <PageLoader />
       ) : (
         myDoubts &&
         myDoubts.length > 0 &&
         myDoubts.map((doubt) => <Doubt key={doubt.id} doubt={doubt} />)
-        // ) : (
-        //   <h1>no doubts</h1>
       )}
     </div>
   )

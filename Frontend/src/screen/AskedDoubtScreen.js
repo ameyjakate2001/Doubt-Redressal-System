@@ -10,15 +10,22 @@ const AskedDoubtScreen = () => {
   const { myDoubts, loading } = useSelector((state) => state.doubts)
   const { user } = useSelector((state) => state.userLogin)
   console.log(user)
-  const [doubts, setDoubts] = useState(
-    myDoubts &&
-      myDoubts.filter((doubt) => user && user._id === doubt.user_id._id)
-  )
+  function getAskedDoubts() {
+    if (myDoubts) {
+      return myDoubts.filter((doubt) => doubt.user_id._id === user._id)
+    }
+  }
+  const doubts = getAskedDoubts()
   useEffect(() => {
     dispatch(getDoubtAction())
   }, [dispatch])
+
+  if (loading) {
+    return <PageLoader />
+  }
+
   return (
-    <div>
+    <div className='home_container'>
       {loading ? (
         <PageLoader />
       ) : (

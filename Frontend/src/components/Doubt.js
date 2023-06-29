@@ -9,6 +9,8 @@ const Doubt = ({ doubt }) => {
 
   const commentHandler = (e) => {
     e.preventDefault()
+    setComment('')
+    console.log(comment)
     dispatch(addCommentAction(comment, doubt._id))
   }
 
@@ -28,22 +30,34 @@ const Doubt = ({ doubt }) => {
       <div className='section-1'>
         <h2>{doubt.title}</h2>
         <p>{doubt.description}</p>
-        <p>Asked by {doubt.user_id.name}</p>
+        <p className='text-end'>Asked by {doubt.user_id.name}</p>
       </div>
       <hr />
       <div className='section-2'>
+        <p>
+          {doubt.comments.length > 0
+            ? `${doubt.comments.length} Comments`
+            : 'No Comment'}
+        </p>
+
         <div className='comments'>
-          {doubt.comments.map((comment) => (
-            <>
+          {doubt.comments.map((comment, i) => (
+            <div
+              key={i}
+              style={{
+                padding: '5px',
+              }}
+            >
               <h5>
-                <span>{comment.user_id.name}: </span>
+                <span style={{ fontWeight: 'bold' }}>
+                  {comment.user_id.name}:{' '}
+                </span>
 
                 {comment.text}
               </h5>
-            </>
+            </div>
           ))}
         </div>
-        <p>{doubt.comments.length} comments</p>
         {user && doubt.resolved === 0 && user.role === 0 ? (
           <form className='commentSubmitForm'>
             <div className='mb-3 d-flex '>
@@ -51,6 +65,7 @@ const Doubt = ({ doubt }) => {
                 type='text'
                 className='form-control'
                 placeholder='First name'
+                value={comment}
                 onChange={(e) => setComment(e.target.value)}
               />
               <Button
@@ -64,10 +79,13 @@ const Doubt = ({ doubt }) => {
             </div>
           </form>
         ) : null}
+
+        <hr />
+
         {doubt.resolved === 1 && doubt.answer_id && (
           <>
             <p>Answered By {doubt.answer_id.name}</p>
-            <h3>Answer : {doubt.answer}</h3>
+            <h5>Answer : {doubt.answer}</h5>
           </>
         )}
       </div>

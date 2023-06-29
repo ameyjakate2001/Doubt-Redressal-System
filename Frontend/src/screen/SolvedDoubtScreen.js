@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getDoubtAction } from '../Action/doubtAction'
 
@@ -9,18 +9,23 @@ const SolvedDoubtScreen = () => {
   const dispatch = useDispatch()
   const { myDoubts, loading } = useSelector((state) => state.doubts)
   const { user } = useSelector((state) => state.userLogin)
-  console.log(user)
-  const [doubts, setDoubts] = useState(
-    myDoubts &&
-      myDoubts.filter(
-        (doubt) => doubt.resolved === 1 && user && user._id === doubt.answer_id
+  function getSolvedDoubts() {
+    if (myDoubts) {
+      return myDoubts.filter(
+        (doubt) => doubt.resolved == 1 && doubt.answer_id._id === user._id
       )
-  )
+    }
+  }
+  const doubts = getSolvedDoubts()
   useEffect(() => {
     dispatch(getDoubtAction())
   }, [dispatch])
+
+  if (loading) {
+    return <PageLoader />
+  }
   return (
-    <div>
+    <div className='home_container'>
       {loading ? (
         <PageLoader />
       ) : (

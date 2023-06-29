@@ -23,6 +23,7 @@ const home = async (req, res) => {
     .populate({
       path: 'answer_id',
     })
+  console.log(doubts)
   res.send(doubts)
 }
 const addDoubt = async (req, res) => {
