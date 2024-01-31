@@ -11,7 +11,7 @@ import {
   ADD_ANSWER_START,
   ADD_ANSWER_SUCCESS,
   ADD_ANSWER_FAIL,
-  API_URL,
+  // API_URL,
 } from '../constant'
 import axios from 'axios'
 axios.defaults.withCredentials = true
@@ -22,7 +22,6 @@ const getDoubtAction = () => async (dispatch, getState) => {
   })
 
   try {
-    // const response = await axios.get(`${API_URL}/api/doubts/getDoubts`)
     const response = await axios.get(`/api/doubts/getDoubts`)
     const doubt = response.data
     dispatch({

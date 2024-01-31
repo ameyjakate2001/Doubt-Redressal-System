@@ -2,7 +2,6 @@ const User = require('../models/users.js')
 const jwt = require('jsonwebtoken')
 
 const handleErrors = (err) => {
-  console.log(err.message)
   let errors = { name: '', email: '', password: '' }
   if (err.message === 'Email not Registered')
     errors.email = 'Email not Registered'
@@ -56,7 +55,6 @@ const loginUser = async (req, res) => {
 
 const checkUser = async (req, res) => {
   const token = req.cookies.jwt
-  // console.log(token)
   let user = null
   let decodedToken
   if (!token) {
@@ -73,14 +71,11 @@ const checkUser = async (req, res) => {
       }
     })
   }
-  // console.log(decodedToken)
   try {
     user = await User.findById(decodedToken.id)
     if (user) user.password = undefined
-    // console.log(user)
     res.status(200).json(user)
   } catch (err) {
-    console.log(err)
     res.status(404).json(user)
   }
   // }

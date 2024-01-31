@@ -2,7 +2,6 @@ const User = require('../models/users')
 const Doubt = require('../models/doubts')
 
 const handleErrors = (err) => {
-  console.log(err)
   let errors = { title: '', description: '' }
   if (err.message.includes('doubt validation failed')) {
     Object.values(err.errors).forEach(({ properties }) => {
@@ -23,7 +22,6 @@ const home = async (req, res) => {
     .populate({
       path: 'answer_id',
     })
-  console.log(doubts)
   res.send(doubts)
 }
 const addDoubt = async (req, res) => {
@@ -35,7 +33,6 @@ const addDoubt = async (req, res) => {
       user_id: req.user.id,
     })
     await doubt.save()
-    console.log('doubt saved')
     res.json({ doubt })
   } catch (err) {
     const errors = handleErrors(err)
@@ -82,7 +79,6 @@ const answerDoubt = async (req, res) => {
   post.answer_id = req.user.id
   post.resolved = 1
   await post.save()
-  console.log('answer added')
   res.send(await Doubt.findById(doubt_id).populate('answer_id'))
 }
 module.exports = {

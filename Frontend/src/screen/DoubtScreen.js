@@ -10,7 +10,7 @@ const DoubtScreen = () => {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(getDoubtAction())
-  }, [])
+  }, [dispatch])
   return (
     <div className='home_container'>
       {loading ? (

@@ -6,14 +6,13 @@ import DoubtScreen from './screen/DoubtScreen'
 import Registerscreen from './screen/RegisterScreen'
 import LoginScreen from './screen/LoginScreen'
 import AddDoubtScreen from './screen/AddDoubtScreen'
-import MyDoubtScreen from './screen/MyDoubtScreen'
+import AnswerDoubtScreen from './screen/AnswerDoubtScreen'
 import PrivateRoute from './screen/PrivateRoute'
 import AdminPrivateRoute from './screen/AdminPrivateRoute'
 import useCheckUser from './hooks/useCheckUser'
 import PageLoader from './components/PageLoader'
-import AskedDoubtScreen from './screen/AskedDoubtScreen'
-import SolvedDoubtScreen from './screen/SolvedDoubtScreen'
-import styles from './index.css'
+import MyAskedDoubtScreen from './screen/MyAskedDoubtScreen'
+import MyAnsweredDoubtScreen from './screen/MyAnsweredDoubtScreen'
 
 function App() {
   const { loading } = useCheckUser()
@@ -36,7 +35,7 @@ function App() {
             path='/solveDoubt'
             element={
               <AdminPrivateRoute>
-                <MyDoubtScreen />
+                <AnswerDoubtScreen />
               </AdminPrivateRoute>
             }
           />
@@ -44,7 +43,7 @@ function App() {
             path='/mySolvedDoubts'
             element={
               <AdminPrivateRoute>
-                <SolvedDoubtScreen />
+                <MyAnsweredDoubtScreen />
               </AdminPrivateRoute>
             }
           />
@@ -60,7 +59,7 @@ function App() {
             path='/myAskedDoubts'
             element={
               <PrivateRoute>
-                <AskedDoubtScreen />
+                <MyAskedDoubtScreen />
               </PrivateRoute>
             }
           />

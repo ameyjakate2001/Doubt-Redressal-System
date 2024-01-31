@@ -7,7 +7,7 @@ import {
   USER_LOGIN_FAIL,
   ERROR_SET_SUCCESS,
   USER_LOGOUT,
-  API_URL,
+  // API_URL,
 } from '../constant'
 import axios from 'axios'
 axios.defaults.withCredentials = true
